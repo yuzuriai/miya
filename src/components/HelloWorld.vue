@@ -1,14 +1,21 @@
 <script lang="ts">
 import gql from "graphql-tag";
 
-const testQuery = gql`query ($id: Int) {
-   Media (id: $id, type: ANIME) {
-      id
-    title {
-      romaji
+const userAnimeStatisticsQuery = gql`query ($name: String) {
+   User (name: $name) {
+    name
+    statistics {
+      anime {
+        tags(limit: 15) {
+          tag {
+            name
+          }
+          count
+        }
+      }
     }
   }
-}`
+}`;
 
 </script>
 
@@ -20,9 +27,10 @@ const inputText = ref('')
 
 
 const show = ref(false)
-const queryInput = computed(() => { return { id: inputText.value ? inputText.value : 1 } })
-const { result: testResult, refetch } = useQuery(testQuery, queryInput)
-const testResultData = computed(() => testResult.value?.Media)
+const queryInput = computed(() => { return { name: inputText.value ? inputText.value : '' } })
+
+const { result: testResult, refetch } = useQuery(userAnimeStatisticsQuery, queryInput)
+const testResultData = computed(() => testResult.value)
 
 
 
@@ -39,6 +47,6 @@ const buttoKun = () => {
   <button @click="buttoKun">Butto-kun</button>
   <div v-if="show && testResultData">
     <p>Data for {{ inputText }}</p>
-    <span>{{ testResultData.title.romaji }}</span>
+    <span>{{ testResultData.User }}</span>
   </div>
 </template>
