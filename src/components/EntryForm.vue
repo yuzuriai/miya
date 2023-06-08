@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import InputText from "primevue/inputtext";
 
 import { useGetGenreCountsLazyQuery } from "./EntryForm.generated";
 
@@ -21,7 +22,7 @@ const buttoKun = () => {
 
 <template>
   <div class="flex flex-col gap-6">
-    <input type="text" v-model="inputText" />
+    <InputText id="username" v-model="inputText" />
     <button @click="buttoKun">Butto-kun</button>
   </div>
   <div v-if="testResultData">
