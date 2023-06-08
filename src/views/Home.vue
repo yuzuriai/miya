@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import HelloWorld from "@/components/HelloWorld.vue";
+import EntryForm from "@/components/EntryForm.vue";
 </script>
 
 <template>
-  <HelloWorld />
+  <EntryForm />
 </template>
 
 <style scoped>

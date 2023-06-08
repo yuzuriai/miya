@@ -1,0 +1,27 @@
+overwrite: true
+schema: "./schema.graphql"
+documents:
+  - "src/**/*.graphql"
+  - "src/**/*.vue"
+  - "src/**/*.ts"
+  - "!(src/**/*.generated.ts)"
+
+generates:
+  src/types.generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+
+  src:
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: types.generated.ts
+    config:
+      vueCompositionApiImportFrom: "vue"
+      scalars:
+        UUID: string
+
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-vue-apollo
