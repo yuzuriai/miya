@@ -1,31 +1,30 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 
-import { useGetGenreCountsQuery } from "./EntryForm.generated";
+import { useGetGenreCountsLazyQuery } from "./EntryForm.generated";
 
 const inputText = ref("");
 
-const show = ref(false);
 const queryInput = computed(() => {
   return { name: inputText.value ? inputText.value : "" };
 });
 
-const { result: testResult, refetch } = useGetGenreCountsQuery(queryInput);
+const { load, result: testResult } = useGetGenreCountsLazyQuery(queryInput);
 
 const testResultData = computed(() => testResult.value);
 
 // :')
 const buttoKun = () => {
-  refetch();
-  show.value = !show.value;
+  load();
 };
 </script>
 
 <template>
-  <h1>Test Result</h1>
-  <input type="text" v-model="inputText" />
-  <button @click="buttoKun">Butto-kun</button>
-  <div v-if="show && testResultData">
+  <div class="flex flex-col gap-6">
+    <input type="text" v-model="inputText" />
+    <button @click="buttoKun">Butto-kun</button>
+  </div>
+  <div v-if="testResultData">
     <p>Data for {{ inputText }}</p>
     <span>{{ testResultData.User }}</span>
   </div>
