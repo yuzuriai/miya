@@ -1,0 +1,15 @@
+query GetGenreCounts($name: String) {
+  User(name: $name) {
+    name
+    statistics {
+      anime {
+        tags(limit: 15) {
+          tag {
+            name
+          }
+          count
+        }
+      }
+    }
+  }
+}
